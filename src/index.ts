@@ -81,6 +81,7 @@ export default {
         response = new Response(objectBodys[0], {
           headers,
           status: range === undefined ? 200 : 206,
+          statusText: range === undefined ? "OK" : "Partial Content"
         });
         cacheResponse = new Response(objectBodys[1], {
           headers,
@@ -91,7 +92,7 @@ export default {
 
       // 缓存
       ctx.waitUntil(cache.put(cacheKey, cacheResponse));
-      response.headers.set("X-Cache", "MISS");
+      response.headers.set("CF-Cache-Status", "MISS");
     } else {
       console.log(`Cache HIT: ${cacheKey}`);
 
@@ -100,10 +101,9 @@ export default {
         response = new Response(response.body, {
           headers: response.headers,
           status: 206,
+          statusText: "Partial Content"
         });
       };
-
-      response.headers.set("X-Cache", "HIT");
     };
 
     return response;
