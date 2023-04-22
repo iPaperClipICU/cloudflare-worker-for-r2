@@ -35,7 +35,7 @@ export default {
     const url = new URL(request.url);
 
     if (
-      url.hostname !== "cf.ipaperclip-icu.cyou" &&
+      url.hostname !== "r2-worker.ipaperclip.top" &&
       url.hostname !== "ipaperclip-file.xodvnm.cn"
     ) return ERROR_403;
     if (!/^https:\/\/ipaperclip\.icu.*$/.test(request.headers.get("referer") ?? "")) return ERROR_403;
