@@ -1,7 +1,11 @@
 name = "ipaperclip-icu-r2"
 main = "src/index.ts"
-compatibility_date = "2023-04-01"
+compatibility_date = "2023-06-10"
+workers_dev = false
 
 [[r2_buckets]]
 binding = "R2"
 bucket_name = "ipaperclip-icu-files"
+
+[placement]
+mode = "smart"

@@ -30,6 +30,17 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> {
+    // CORS
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "https://ipaperclip.icu",
+          "Access-Control-Allow-Methods": "GET, HEAD, POST, PUT, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Max-Age": "86400",
+        },
+      });
+    }
     const ERROR_403 = new Response(null, { status: 403 });
 
     const url = new URL(request.url);
@@ -90,6 +101,7 @@ export default {
       // 缓存
       ctx.waitUntil(cache.put(cacheKey, cacheResponse));
       response.headers.set("CF-Cache-Status", "MISS");
+      response.headers.set("Access-Control-Allow-Origin", "https://ipaperclip.icu");
     } else {
       console.log(`Cache HIT: ${cacheKey}`);
 
